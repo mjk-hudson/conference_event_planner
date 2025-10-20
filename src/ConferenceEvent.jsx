@@ -3,10 +3,12 @@ import "./ConferenceEvent.css";
 import TotalCost from "./TotalCost";
 import { useSelector, useDispatch } from "react-redux";
 import { incrementQuantity, decrementQuantity } from "./venueSlice";
+import { incrementAvQuantity, decrementAvQuantity } from "./avSlice";
 const ConferenceEvent = () => {
     const [showItems, setShowItems] = useState(false);
     const [numberOfPeople, setNumberOfPeople] = useState(1);
     const venueItems = useSelector((state) => state.venue);
+    const avItems = useSelector((state) => state.av);
     const dispatch = useDispatch();
     const remainingAuditoriumQuantity = 3 - venueItems.find(item => item.name === "Auditorium Hall (Capacity:200)").quantity;
 
@@ -29,9 +31,11 @@ const ConferenceEvent = () => {
         }
       };
     const handleIncrementAvQuantity = (index) => {
+      dispatch(incrementAVQuantity (index));
     };
 
     const handleDecrementAvQuantity = (index) => {
+      dispatch(decrementAvQuantity (index));
     };
 
     const handleMealSelection = (index) => {
@@ -53,11 +57,16 @@ const ConferenceEvent = () => {
           venueItems.forEach((item) => {
             totalCost += item.cost * item.quantity;
           });
+        }else if () {
+          avItems.forEach((item) =>{
+            totalCost += item.cost * item.quantity;
+          })
         }
         return totalCost;
       };
     const venueTotalCost = calculateTotalCost("venue");
-
+    const avItems = caluculateTotalCost('av');
+//Task 4 no.23 (10/20/25 3:37 a.m.) 
     const navigateToProducts = (idType) => {
         if (idType == '#venue' || idType == '#addons' || idType == '#meals') {
           if (showItems) { // Check if showItems is false
